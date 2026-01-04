@@ -27,7 +27,7 @@ export default function Register() {
     setSuccess("")
 
     try {
-      await api.post("users/register/", formData)
+      await api.post("/users/register/", formData)
       setSuccess("Registration successful. Please wait for approval.")
       setFormData({
         username: "",
