@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react"
-import api from "../api/axios"
-import { AuthContext } from "../context/AuthContext"
+import api from "../../api/axios"
+import { AuthContext } from "../../context/AuthContext"
 
 const MainGroupView = () => {
   const auth = useContext(AuthContext)   // get the full context

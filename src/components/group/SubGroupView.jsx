@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react"
 import { useParams } from "react-router-dom"
-import api from "../api/axios"
-import { AuthContext } from "../context/AuthContext"
+import api from "../../api/axios"
+import { AuthContext } from "../../context/AuthContext"
 
 const SubGroupView = () => {
   const { id } = useParams()
