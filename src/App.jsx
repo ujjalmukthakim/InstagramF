@@ -1,21 +1,43 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import MainLayout from "./components/layout/MainLayout"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { useContext } from "react"
+import { AuthContext } from "./context/AuthContext"
+import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
-import WeeklyBooking from "./components/booking/WeeklyBooking"
-import ActivityTracker from "./components/activity/ActivityTracker"
-import ApprovalList from "./components/approval/ApprovalList"
+import WeeklyBooking from "./pages/WeeklyBooking"
+import ActivityTracker from "./pages/ActivityTracker"
+import Approvals from "./pages/ApprovalList"
+import Groups from "./pages/Groups"
 
-function App() {
+const App = () => {
+  const { user, loading } = useContext(AuthContext)
+
+  if (loading) return <p>Loading...</p>
+
   return (
     <BrowserRouter>
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/booking" element={<WeeklyBooking />} />
+      <Routes>
+        {/* Public */}
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+
+        {/* Private */}
+        <Route
+          path="/"
+          element={user ? <Dashboard /> : <Navigate to="/login" />}
+        />
+
+        {user && ["CEO","DIRECTOR","DELTA"].includes(user.role) && (
+          <Route path="/groups" element={<Groups />} />
+        )}
+        {user && ["DELTA","CODE"].includes(user.role) && (
           <Route path="/activity" element={<ActivityTracker />} />
-          <Route path="/approvals" element={<ApprovalList />} />
-        </Routes>
-      </MainLayout>
+        )}
+        <Route path="/booking" element={user ? <WeeklyBooking /> : <Navigate to="/login" />} />
+        {user && ["CEO","DIRECTOR","DELTA","CODE"].includes(user.role) && (
+          <Route path="/approvals" element={<Approvals />} />
+        )}
+
+        <Route path="*" element={<Navigate to={user ? "/" : "/login"} />} />
+      </Routes>
     </BrowserRouter>
   )
 }

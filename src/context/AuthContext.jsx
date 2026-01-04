@@ -8,14 +8,20 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.get("/auth/me/")
-      .then(res => setUser(res.data))
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false))
+    const token = localStorage.getItem("access")
+    if (token) {
+      api.get("/auth/me/")
+        .then(res => setUser(res.data))
+        .catch(() => setUser(null))
+        .finally(() => setLoading(false))
+    } else {
+      setLoading(false)
+    }
   }, [])
 
+  // ✅ Include setUser so Login page can update context after login
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading }}>
       {children}
     </AuthContext.Provider>
   )
