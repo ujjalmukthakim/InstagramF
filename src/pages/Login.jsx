@@ -14,7 +14,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const res = await api.post("/auth/login/", { username, password })
+      const res = await api.post("/users/login/", { username, password })
       setUser(res.data)
       navigate("/") // go to dashboard after login
     } catch (err) {

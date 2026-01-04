@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
         const decoded = jwt_decode(token)
 
         // Fetch actual user data from backend
-        api.get("/auth/me/", {
+        api.get("/users/me/", {
           headers: { Authorization: `Bearer ${token}` }
         })
         .then(res => {
