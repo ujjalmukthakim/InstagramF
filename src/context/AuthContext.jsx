@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import api from "../api/axios"
-import jwt_decode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 
 export const AuthContext = createContext(null)
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
     if (token) {
       try {
-        const decoded = jwt_decode(token)
+        const decoded = jwtDecode(token);
 
         // Fetch actual user data from backend
         api.get("/users/me/", {
