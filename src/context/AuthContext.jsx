@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, [])
 
-  // ✅ Include setUser so Login page can update context after login
   return (
     <AuthContext.Provider value={{ user, setUser, loading }}>
       {children}

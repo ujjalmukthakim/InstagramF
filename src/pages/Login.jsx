@@ -20,7 +20,7 @@ const Login = () => {
       const userRes = await api.get("/auth/me/")
       setUser(userRes.data)
 
-      navigate("/")  // Redirect to Dashboard
+      navigate("/") // redirect to dashboard
     } catch (err) {
       setError(err.response?.data?.detail || "Login failed")
     }
@@ -29,8 +29,8 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow w-96">
-        <h1 className="text-2xl mb-4">Login</h1>
-        {error && <p className="text-red-500">{error}</p>}
+        <h1 className="text-2xl mb-4 font-bold">Login</h1>
+        {error && <p className="text-red-500 mb-2">{error}</p>}
         <input
           type="text"
           placeholder="Username"
@@ -41,11 +41,11 @@ const Login = () => {
         <input
           type="password"
           placeholder="Password"
-          className="w-full p-2 mb-2 border rounded"
+          className="w-full p-2 mb-4 border rounded"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="w-full p-2 bg-blue-500 text-white rounded">
+        <button className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
           Login
         </button>
       </form>
