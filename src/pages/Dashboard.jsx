@@ -5,7 +5,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState(null)
 
   useEffect(() => {
-    api.get("/dashboard/stats/")
+    api.get("/dashboard/")
       .then(res => setStats(res.data))
   }, [])
 
