@@ -63,6 +63,7 @@ function App() {
         <Routes>
           {/* Login page for unauthenticated users */}
           <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}
