@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react"
 import api from "../api/axios"
+import jwt_decode from "jwt-decode"
 
 export const AuthContext = createContext(null)
 
@@ -8,12 +9,29 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const token = localStorage.getItem("access")
+    const token = localStorage.getItem("access") // JWT token from login or superuser
+
     if (token) {
-      api.get("/auth/me/")
-        .then(res => setUser(res.data))
-        .catch(() => setUser(null))
+      try {
+        const decoded = jwt_decode(token)
+
+        // Fetch actual user data from backend
+        api.get("/auth/me/", {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+        .then(res => {
+          setUser(res.data) // backend returns username, role, permissions, etc.
+        })
+        .catch(err => {
+          console.error("Failed to fetch user:", err)
+          setUser(null)
+        })
         .finally(() => setLoading(false))
+      } catch (err) {
+        console.error("Invalid token:", err)
+        setUser(null)
+        setLoading(false)
+      }
     } else {
       setLoading(false)
     }
