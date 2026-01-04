@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
         const decoded = jwtDecode(token); // you can use this if needed
         console.log("Decoded JWT:", decoded);
 
-        api.get("/users/me") // backend endpoint must match this
+        api.get("/users/me/") // backend endpoint must match this
           .then(res => setUser(res.data))
           .catch(err => {
             console.error("Failed to fetch user:", err);
