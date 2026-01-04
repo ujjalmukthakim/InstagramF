@@ -10,6 +10,8 @@ import ActivityTracker from "./components/activity/ActivityTracker"
 import ApprovalList from "./components/approval/ApprovalList"
 import MainGroupView from "./components/group/MainGroupView"
 import SubGroupView from "./components/group/SubGroupView"
+import Register from "./pages/Register"
+
 
 // Wrapper component to get subgroupId from URL param
 const SubGroupWrapper = () => {
