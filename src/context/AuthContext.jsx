@@ -11,29 +11,24 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("access");
 
-    if (!token) {
-      setLoading(false);
-      return;
-    }
+    if (token) {
+      try {
+        const decoded = jwtDecode(token); // you can use this if needed
+        console.log("Decoded JWT:", decoded);
 
-    try {
-      jwtDecode(token); // just validates token format
-
-      api.get("/users/me/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then(res => setUser(res.data))
-        .catch(err => {
-          console.error("Failed to fetch user:", err);
-          setUser(null);
-        })
-        .finally(() => setLoading(false));
-
-    } catch (err) {
-      console.error("Invalid token:", err);
-      setUser(null);
+        api.get("/users/me/") // backend endpoint must match this
+          .then(res => setUser(res.data))
+          .catch(err => {
+            console.error("Failed to fetch user:", err);
+            setUser(null);
+          })
+          .finally(() => setLoading(false));
+      } catch (err) {
+        console.error("Invalid token:", err);
+        setUser(null);
+        setLoading(false);
+      }
+    } else {
       setLoading(false);
     }
   }, []);
